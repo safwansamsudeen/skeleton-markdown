@@ -1,33 +1,24 @@
-# Svelte Markdown
+# Skeleton Markdown
+A markdown parser that renders into Svelte Components, made for Skeleton.js. 
 
-[![Tests](https://github.com/pablo-abc/svelte-markdown/workflows/Tests/badge.svg?branch=master)](https://github.com/pablo-abc/svelte-markdown/actions?query=workflow%3ATests)
-[![npm](https://img.shields.io/npm/v/svelte-markdown)](https://www.npmjs.com/package/svelte-markdown)
-[![npm](https://img.shields.io/npm/dw/svelte-markdown)](https://www.npmjs.com/package/svelte-markdown)
-![NPM](https://img.shields.io/npm/l/svelte-markdown)
+Notably, code blocks are generated using the Code Block utility.
 
-A markdown parser that renders into Svelte Components. Inspired by [ReactMarkdown](https://github.com/remarkjs/react-markdown).
+Original idea and code from [Svelte Markdown](https://github.com/pablo-abc/svelte-markdown).
 
 ## Installation
 
-You can install it with
+You can install it with:
 
 ```console
-$ npm i -S svelte-markdown
+$ npm i -S skeleton-markdown
 ```
 
-If you use npm or if you prefer yarn
-
-```console
-$ yarn add svelte-markdown
-```
-
-If you're using Sapper you might need to install it as a dev dependency.
 
 ## Usage
 
 ```html
 <script>
-  import SvelteMarkdown from 'svelte-markdown'
+  import SkeletonMarkdown from 'skeleton-markdown'
   const source = `
   # This is a header
 
@@ -45,19 +36,19 @@ This is a paragraph.
 | With two    | columns |`
 </script>
 
-<SvelteMarkdown {source} />
+<SkeletonMarkdown {source} />
 ```
 
 This would render something like
 
 ```html
-<h1>This is a header</h1>
+<h1 class="h1">This is a header</h1>
 <p>This is a paragraph.</p>
-<ul>
+<ul class="list">
   <li>This is a list</li>
   <li>
     With two items
-    <ol start="1">
+    <ol start="1" class="list">
       <li>And a sublist</li>
       <li>
         That is ordered
@@ -69,37 +60,39 @@ This would render something like
     </ol>
   </li>
 </ul>
-<table>
-  <thead>
-    <tr>
-      <th>And this is</th>
-      <th>A table</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>With two</td>
-      <td>columns</td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-container">
+  <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>And this is</th>
+          <th>A table</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>With two</td>
+          <td>columns</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
 ```
 
 ## Note
 
-Just like with React Markdown, this package doesn't use `{@html ...}` unless you need to render HTML.
+Just like with Svelte Markdown, this package doesn't use `{@html ...}` unless you need to render HTML.
 
 ## Props
 
-The SvelteMarkdown component accepts the following props:
+The SkeletonMarkdown component accepts the following props:
 
-- `source` - _string_ or _array_ The Markdown source to be parsed, or an array of tokens to be rendered directly.
-- `renderers` - _object (optional)_ An object where the keys represent a node type and the value is a Svelte component. This object will be merged with the default renderers. For now you can check how the default renderers are written in the source code at `src/renderers`.
-- `options` - _object (optional)_ An object containing [options for Marked](https://marked.js.org/using_advanced#options)
+- `source`, _string_ or _array_ : the Markdown source to be parsed, or an array of tokens to be rendered directly.
+- `renderers`, _object (optional)_: an object where the keys represent a node type and the value is a Svelte component. This object will be merged with the default renderers. For now, you can check how the default renderers are written in the source code at `src/renderers`.
+- `options`, _object (optional)_: an object containing [options for Marked](https://marked.js.org/using_advanced#options).
 
 ## Renderers
 
-To create custom renderer for an element, you can create a Svelte component with the default props ([you can check them here](https://marked.js.org/using_pro#renderer)), for example:
+To create custom renderer for an element, you can create a Svelte component with the [default props](https://marked.js.org/using_pro#renderer), for example:
 
 _`ImageComponent.svelte`_
 ```svelte
@@ -120,12 +113,12 @@ So you can import the component and pass to the `renderers` props:
 
 ```svelte
 <script>
-  import SvelteMarkdown from "svelte-markdown";
+  import SkeletonMarkdown from "skeleton-markdown";
   import ImageComponent from "./renderers/ImageComponent.svelte";
   export let content;
 </script>
 
-<SvelteMarkdown source={content} 
+<SkeletonMarkdown source={content} 
   renderers={{ image: ImageComponent }} 
 />
 ```
@@ -136,7 +129,7 @@ For greater flexibility, an array of tokens may be given as `source`, in which c
 
 ```html
 <script>
-  import SvelteMarkdown from 'svelte-markdown'
+  import SkeletonMarkdown from 'skeleton-markdown'
   import { marked } from 'marked'
 
   const tokens = marked.lexer('this is an **example**')
@@ -147,7 +140,7 @@ For greater flexibility, an array of tokens may be given as `source`, in which c
   })
 </script>
 
-<SvelteMarkdown source={tokens} />
+<SkeletonMarkdown source={tokens} />
 ```
 
 This will render the following:
@@ -162,7 +155,7 @@ A `parsed` event will be fired when the final tokens have been calculated, allow
 
 ```html
 <script>
-  import SvelteMarkdown from 'svelte-markdown'
+  import SkeletonMarkdown from 'skeleton-markdown'
 
   const source = `# This is a header`
 
@@ -172,7 +165,7 @@ A `parsed` event will be fired when the final tokens have been calculated, allow
   }
 </script>
 
-<SvelteMarkdown {source} on:parsed={handleParsed}>
+<SkeletonMarkdown {source} on:parsed={handleParsed}>
 ```
 
 ## Available renderers
@@ -229,7 +222,7 @@ would remain the default text color.
 To use [inline markdown](https://marked.js.org/using_advanced#inline), you can assign the prop `isInline` to the component.
 
 ```html
-<SvelteMarkdown {source} isInline />
+<SkeletonMarkdown {source} isInline />
 ```
 
 ## HTML rendering
@@ -244,30 +237,3 @@ This is a **markdown** paragraph.
 
 Note that the HTML paragraph must be enclosed within `<p>` tags.
 
-## Developing
-
-Some tests have been added to the `tests` folder. You can clone this repo and create another svelte app and link it to this repo to try modifying it.
-
-You can clone this repo and do the following:
-
-```console
-$ yarn
-$ yarn link
-$ yarn dev
-```
-
-This will watch all changes and make the project linkable. Now on the app you created you can link it with:
-
-```console
-$ yarn link svelte-markdown
-```
-
-And then import it like in the example above.
-
-As of now the only external dependency of this project is `marked`.
-
-## Related
-
-- [ReactMarkdown](https://github.com/remarkjs/react-markdown) - React library to render markdown using React components. Inspiration for this library.
-- [Svelte](https://svelte.dev) - JavaScript front-end framework.
-- [Marked](https://marked.js.org/) - Markdown parser

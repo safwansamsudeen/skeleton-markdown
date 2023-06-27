@@ -1,3 +1,3 @@
-import SvelteMarkdown from './SvelteMarkdown.svelte'
+import SkeletonMarkdown from './SkeletonMarkdown.svelte'
 
-export default SvelteMarkdown
+export default SkeletonMarkdown

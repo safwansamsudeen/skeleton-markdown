@@ -1,16 +1,11 @@
-import '@testing-library/jest-dom/extend-expect'
-
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/svelte'
 
-import SvelteMarkdown from '../src/SvelteMarkdown.svelte'
+import SkeletonMarkdown from '../src/SkeletonMarkdown.svelte'
 
 describe('testing default renderers', () => {
-  beforeAll(() => {
-    console.warn = jest.fn()
-  })
-
   test('renders a paragraph', () => {
-    render(SvelteMarkdown, { source: 'Plain text' })
+    render(SkeletonMarkdown, { source: 'Plain text' })
 
     const element = screen.getByText('Plain text')
     expect(element).toBeInTheDocument()
@@ -18,7 +13,7 @@ describe('testing default renderers', () => {
   })
 
   test('renders emphasized paragraph', () => {
-    render(SvelteMarkdown, { source: '*Plain text*' })
+    render(SkeletonMarkdown, { source: '*Plain text*' })
 
     const element = screen.getByText('Plain text')
     expect(element).toBeInTheDocument()
@@ -26,7 +21,7 @@ describe('testing default renderers', () => {
   })
 
   test('renders strong paragraph', () => {
-    render(SvelteMarkdown, { source: '**Plain text**' })
+    render(SkeletonMarkdown, { source: '**Plain text**' })
 
     const element = screen.getByText('Plain text')
     expect(element).toBeInTheDocument()
@@ -34,30 +29,32 @@ describe('testing default renderers', () => {
   })
 
   test('renders a separator', () => {
-    render(SvelteMarkdown, { source: '---' })
+    render(SkeletonMarkdown, { source: '---' })
 
     expect(document.getElementsByTagName('hr')[0]).toBeInTheDocument()
   })
 
   test('renders a blockquote', () => {
-    render(SvelteMarkdown, { source: '> Plain text' })
+    render(SkeletonMarkdown, { source: '> Plain text' })
 
     const element = document.getElementsByTagName('blockquote')[0]
     expect(element).toBeInTheDocument()
-    expect(element).toContainHTML('<blockquote><p>Plain text</p></blockquote>')
+    expect(element).toContainHTML('<blockquote class="blockquote"><p>Plain text</p></blockquote>')
   })
 
   test('renders a link', () => {
-    render(SvelteMarkdown, { source: '[link](https://pablo.berganza.dev "link title")' })
+    render(SkeletonMarkdown, { source: '[link](https://pablo.berganza.dev "link title")' })
 
-    const element = screen.getByRole('link', { name: /link title/ })
+    const element = document.getElementsByTagName('a')[0]
     expect(element).toBeInTheDocument()
-    expect(element).toHaveTextContent('link')
+    expect(element).toHaveAttribute('href', 'https://pablo.berganza.dev')
+    expect(element).toHaveAttribute('title', 'link title')
+    expect(element).toHaveAttribute('class', 'anchor')
   })
 
   describe('heading', () => {
     test('renders a heading with id', () => {
-      render(SvelteMarkdown, { source: '# This is a title' })
+      render(SkeletonMarkdown, { source: '# This is a title' })
 
       const element = screen.getByRole('heading', { name: /This is a title/ })
       expect(element).toBeInTheDocument()
@@ -65,7 +62,7 @@ describe('testing default renderers', () => {
     })
 
     test('renders a heading (alternative syntax)', () => {
-      render(SvelteMarkdown, { source: 'This is a title\n===' })
+      render(SkeletonMarkdown, { source: 'This is a title\n===' })
 
       const element = screen.getByRole('heading', { name: /This is a title/ })
       expect(element).toBeInTheDocument()
@@ -73,14 +70,14 @@ describe('testing default renderers', () => {
     })
 
     test('renders a heading with id and preffix', () => {
-      render(SvelteMarkdown, { source: '# This is a title', options: { headerPrefix: 'test-' } })
+      render(SkeletonMarkdown, { source: '# This is a title', options: { headerPrefix: 'test-' } })
 
       const element = screen.getByRole('heading', { name: /This is a title/ })
       expect(element).toHaveAttribute('id', 'test-this-is-a-title')
     })
 
     test('renders a heading with non-duplicate id', () => {
-      render(SvelteMarkdown, { source: '# This is a title\n\n## This is a title' })
+      render(SkeletonMarkdown, { source: '# This is a title\n\n## This is a title' })
 
       const element = screen.getAllByRole('heading', { name: /This is a title/ })
       expect(element[0]).toHaveAttribute('id', 'this-is-a-title')
@@ -88,7 +85,7 @@ describe('testing default renderers', () => {
     })
 
     test('renders a heading without id', () => {
-      render(SvelteMarkdown, { source: '# This is a title', options: { headerIds: false } })
+      render(SkeletonMarkdown, { source: '# This is a title', options: { headerIds: false } })
 
       const element = screen.getByRole('heading', { name: /This is a title/ })
       expect(element).not.toHaveAttribute('id')
@@ -96,7 +93,7 @@ describe('testing default renderers', () => {
   })
 
   test('renders an image', () => {
-    render(SvelteMarkdown, { source: '![Image](https://pablo.berganza.dev/img/profile-pic-400.jpeg "image title")' })
+    render(SkeletonMarkdown, { source: '![Image](https://pablo.berganza.dev/img/profile-pic-400.jpeg "image title")' })
 
     const element = screen.getByRole('img', { name: /Image/ })
     expect(element).toBeInTheDocument()
@@ -105,7 +102,7 @@ describe('testing default renderers', () => {
 
 
   test('renders a table', () => {
-    render(SvelteMarkdown, { source: `
+    render(SkeletonMarkdown, { source: `
 | header |
 |--------|
 | value |` })
