@@ -4,8 +4,14 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/skeleton-markdown.umd.cjs",
+  "main": "./dist/skeleton-markdown.js",
   "module": "./dist/skeleton-markdown.js",
+  "exports": {
+    ".": {
+      "import": "./dist/my-lib.js",
+      "require": "./dist/my-lib.umd.cjs"
+    }
+  },
   "svelte": "./dist/skeleton-markdown.js",
   "version": "0.1.0",
   "description": "A markdown parser for Svelte with Skeleton.js",
