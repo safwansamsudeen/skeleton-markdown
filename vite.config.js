@@ -4,34 +4,29 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 
 export default defineConfig({
-  plugins: [svelte({hot: !process.env.VITEST})],
+  plugins: [svelte({configFile: false, compilerOptions: {dev: false}})],
   test: {
     include: ['tests/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     globals: true,
-    environment: 'jsdom',
-    deps: {
-      inline: ["@skeletonlabs/skeleton"]
-    }
+    environment: 'jsdom'
   },
   build: {
     lib: {
-      // Could also be a dictionary or array of multiple entry points
       entry: resolve(__dirname, 'src/index.js'),
       name: 'Skeleton Markdown',
-      // the proper extensions will be added
       fileName: 'skeleton-markdown',
     },
     rollupOptions: {
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
-      external: ['svelte'],
+      external: ['svelte', '@skeletonlabs/skeleton', 'marked'],
+      input: 'src/index.js',
       output: {
-        // Provide global variables to use in the UMD build
-        // for externalized deps
         globals: {
-          svelte: 'Svelte',
+          svelte: 'svelte',
+          '@skeletonlabs/skeleton': 'skeleton',
+          marked: 'marked',
         },
       },
     },
+    ssr: true
   }
 })
