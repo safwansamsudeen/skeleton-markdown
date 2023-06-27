@@ -8,8 +8,8 @@
   "module": "./dist/skeleton-markdown.js",
   "exports": {
     ".": {
-      "import": "./dist/my-lib.js",
-      "require": "./dist/my-lib.umd.cjs"
+      "import": "./dist/skeleton-markdown.js",
+      "require": "./dist/skeleton-markdown.umd.cjs"
     }
   },
   "svelte": "./dist/skeleton-markdown.js",
