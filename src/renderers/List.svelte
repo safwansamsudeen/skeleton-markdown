@@ -4,7 +4,7 @@
 </script>
 
 {#if ordered}
-  <ol {start}><slot></slot></ol>
+  <ol class="list" {start}><slot></slot></ol>
 {:else}
-  <ul><slot></slot></ul>
+  <ul class="list"><slot></slot></ul>
 {/if}

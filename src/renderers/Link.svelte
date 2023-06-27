@@ -3,4 +3,4 @@
   export let title = undefined
 </script>
 
-<a {href} {title}><slot></slot></a>
+<a class="anchor" {href} {title}><slot></slot></a>

@@ -1,1 +1,1 @@
-<del><slot></slot></del>
+<del class="del"><slot></slot></del>
