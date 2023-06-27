@@ -1,0 +1,32 @@
+{
+  "name": "skeleton-markdown",
+  "version": "0.1.0",
+  "description": "A markdown parser for Svelte with Skeleton.js",
+  "main": "src/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^2.4.2",
+    "eslint": "^8.43.0",
+    "prettier": "^2.8.8",
+    "svelte": "^4.0.0"
+  },
+  "dependencies": {
+    "marked": "^5.1.0"
+  },
+  "peerDependencies": {
+    "@skeletonlabs/skeleton": "^1.8.0",
+    "svelte": "^4.0.0"
+  },
+  "scripts": {
+    "test": "jest tests"
+  },
+  "keywords": [
+    "markdown",
+    "svelte",
+    "skeleton"
+  ],
+  "author": "Safwan Samsudeen <safwansamsudeen.c@gmail.com>",
+  "license": "ISC"
+}
