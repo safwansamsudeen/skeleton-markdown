@@ -13,7 +13,7 @@
     }
   },
   "svelte": "./dist/skeleton-markdown.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A markdown parser for Svelte with Skeleton.js",
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
